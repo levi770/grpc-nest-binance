@@ -1,8 +1,8 @@
-import { Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
-import { SequelizeModule } from '@nestjs/sequelize'
-import { BinanceModule } from './binance/binance.module'
-import { Spread } from './binance/model/spread.entity'
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { BinanceModule } from './binance/binance.module';
+import { Spread } from './binance/model/spread.entity';
 
 @Module({
     imports: [

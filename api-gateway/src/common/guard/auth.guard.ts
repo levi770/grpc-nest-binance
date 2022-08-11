@@ -1,12 +1,14 @@
 import { Injectable, CanActivate, ExecutionContext, HttpStatus, UnauthorizedException, Inject } from '@nestjs/common';
-import { RequestWithUser } from '../../common/interface/reqWithUser.interface';
-import { ValidateResponse } from '../auth.pb';
-import { AuthService } from '../auth.service';
+import { RequestWithUser } from '../interface/reqWithUser.interface';
+import { ValidateResponse } from '../../auth/auth.pb';
+import { AuthService } from '../../auth/auth.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-    @Inject(AuthService)
-    public readonly service: AuthService;
+    constructor(
+        @Inject(AuthService)
+        public readonly service: AuthService,
+    ) {}
 
     public async canActivate(ctx: ExecutionContext): Promise<boolean> | never {
         const req: RequestWithUser = ctx.switchToHttp().getRequest();

@@ -1,9 +1,9 @@
-import { INestMicroservice, ValidationPipe } from '@nestjs/common'
-import { NestFactory } from '@nestjs/core'
-import { Transport } from '@nestjs/microservices'
-import { join } from 'path'
-import { AppModule } from './app.module'
-import { protobufPackage } from './binance/binance.pb'
+import { INestMicroservice, ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
+import { Transport } from '@nestjs/microservices';
+import { join } from 'path';
+import { AppModule } from './app.module';
+import { protobufPackage } from './binance/binance.pb';
 
 async function bootstrap() {
     const app: INestMicroservice = await NestFactory.createMicroservice(AppModule, {
@@ -13,11 +13,11 @@ async function bootstrap() {
             package: protobufPackage,
             protoPath: join('../proto/binance.proto'),
         },
-    })
+    });
 
-    app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }))
+    app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
-    await app.listen()
+    await app.listen();
 }
 
-bootstrap()
+bootstrap();

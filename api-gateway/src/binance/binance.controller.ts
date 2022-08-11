@@ -2,7 +2,7 @@ import { Controller, Inject, Post, UseGuards, Body, Get } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { ClientGrpc } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
-import { AuthGuard } from '../auth/guard/auth.guard';
+import { AuthGuard } from '../common/guard/auth.guard';
 import { SetSpreadRequestDto } from './dto/setSpreadRequest.dto';
 import { SetSpreadResponceDto } from './dto/setSpreadResponce.dto';
 import { GetSpreadResponceDto } from './dto/getSpreadResponce.dto';
