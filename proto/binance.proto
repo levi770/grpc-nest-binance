@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+package binance;
+
+service BinanceService {
+  rpc GetSpread (google.protobuf.Empty) returns (GetSpreadResponse) {}
+  rpc SetSpread (SetSpreadRequest) returns (SetSpreadResponse) {}
+}
+
+// GetSpread
+
+message GetSpreadResponse {
+  int32 status = 1;
+  repeated string error = 2;
+  float spread = 3;
+}
+
+// SetSpread
+
+message SetSpreadRequest {
+  float spread = 1;
+}
+
+message SetSpreadResponse {
+  int32 status = 1;
+  repeated string error = 2;
+}
