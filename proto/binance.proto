@@ -46,7 +46,7 @@ message SubscribeFeedResponse {
   float bidVolume = 6;
   float ask = 7;
   float askVolume = 8;
-  int32 timestamp = 9;
+  float timestamp = 9;
 }
 
 message UnsubscribeFeedRequest {

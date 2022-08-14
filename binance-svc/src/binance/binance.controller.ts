@@ -1,10 +1,8 @@
-import { Metadata } from '@grpc/grpc-js';
 import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 import {
     BINANCE_SERVICE_NAME,
-    Empty,
     GetSpreadResponse,
     SetSpreadRequest,
     SetSpreadResponse,

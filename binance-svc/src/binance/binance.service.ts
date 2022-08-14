@@ -3,7 +3,6 @@ import { HttpStatus, Injectable, OnModuleInit } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Spread } from './model/spread.entity';
 import {
-    Empty,
     GetSpreadResponse,
     SetSpreadRequest,
     SetSpreadResponse,
@@ -11,13 +10,14 @@ import {
     UnsubscribeFeedRequest,
     UnsubscribeFeedResponse,
 } from './binance.pb';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class BinanceService implements OnModuleInit {
     private readonly binanceClient: WebsocketClient;
     private readonly logger = { ...DefaultLogger };
     private feeds = new Map();
+    private listeners = new Map();
     private currSpread = 0;
 
     constructor(
@@ -25,6 +25,7 @@ export class BinanceService implements OnModuleInit {
         private readonly spreadRepo: typeof Spread,
     ) {
         this.binanceClient = new WebsocketClient({ beautify: true }, this.logger);
+        this.binanceClient.subscribeSpotSymbol24hrTicker('BTCUSDT');
     }
 
     async onModuleInit() {
@@ -38,8 +39,9 @@ export class BinanceService implements OnModuleInit {
         const feed$ = new Subject<any>();
         this.feeds.set(request.clientId, feed$);
 
-        this.binanceClient.subscribeSpotSymbol24hrTicker(request.market);
-        this.binanceClient.on('formattedMessage', (data: any) => {
+        this.logger.info('Client connected ' + request.clientId);
+
+        const listener = (data: any) => {
             const formatedData = {
                 symbol: data.symbol,
                 realBid: data.bestBid,
@@ -51,9 +53,13 @@ export class BinanceService implements OnModuleInit {
                 askVolume: data.bestAskQuantity,
                 timestamp: Date.now(),
             };
-            console.log(formatedData);
+            //this.logger.info('feed for ' + request.clientId);
             feed$.next(formatedData);
-        });
+        };
+
+        this.binanceClient.on('formattedMessage', listener);
+
+        this.listeners.set(request.clientId, listener);
 
         return feed$.asObservable();
     }
@@ -64,9 +70,15 @@ export class BinanceService implements OnModuleInit {
             this.feeds.delete(request.clientId);
             feed.complete();
 
+            const listener = this.listeners.get(request.clientId);
+            this.binanceClient.removeListener('formattedMessage', listener);
+            this.listeners.delete(request.clientId);
+
+            this.logger.info('Client disconnected ' + request.clientId);
+
             return { result: true, error: null };
         } catch (error) {
-            return { result: false, error: error.message };
+            return { result: false, error: [error.message] };
         }
     }
 
