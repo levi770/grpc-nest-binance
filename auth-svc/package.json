@@ -1,5 +1,5 @@
 {
-    "name": "grpc-nest-auth-svc",
+    "name": "auth-svc",
     "version": "0.0.1",
     "description": "",
     "author": "",
@@ -44,6 +44,7 @@
         "sequelize": "^6.21.3"
     },
     "devDependencies": {
+        "@compodoc/compodoc": "^1.1.19",
         "@nestjs/cli": "^9.0.0",
         "@nestjs/schematics": "^9.0.1",
         "@nestjs/testing": "^9.0.8",
