@@ -55,6 +55,6 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('/docs', app, document);
 
-    await app.listen(5000, '127.0.0.1', async () => console.log(`Server started on port ${await app.getUrl()}`));
+    await app.listen(5000, 'api-gateway', async () => console.log(`Server started on port ${await app.getUrl()}`));
 }
 bootstrap();

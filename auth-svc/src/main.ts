@@ -10,9 +10,9 @@ async function bootstrap() {
     const app: INestMicroservice = await NestFactory.createMicroservice(AppModule, {
         transport: Transport.GRPC,
         options: {
-            url: '0.0.0.0:50051',
+            url: 'auth-svc:50051',
             package: protobufPackage,
-            protoPath: join('../proto/auth.proto'),
+            protoPath: join('node_modules/grpc-nest-binance-proto/proto/auth.proto'),
         },
     })
 

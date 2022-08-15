@@ -12,9 +12,9 @@ import { AuthService } from './auth.service';
                 name: AUTH_SERVICE_NAME,
                 transport: Transport.GRPC,
                 options: {
-                    url: '0.0.0.0:50051',
+                    url: 'auth-svc:50051',
                     package: AUTH_PACKAGE_NAME,
-                    protoPath: '../proto/auth.proto',
+                    protoPath: 'node_modules/grpc-nest-binance-proto/proto/auth.proto',
                 },
             },
         ]),

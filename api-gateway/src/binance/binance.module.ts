@@ -11,9 +11,9 @@ import { BINANCE_PACKAGE_NAME, BINANCE_SERVICE_NAME } from './binance.pb';
                 name: BINANCE_SERVICE_NAME,
                 transport: Transport.GRPC,
                 options: {
-                    url: '0.0.0.0:50052',
+                    url: 'binance-svc:50052',
                     package: BINANCE_PACKAGE_NAME,
-                    protoPath: '../proto/binance.proto',
+                    protoPath: 'node_modules/grpc-nest-binance-proto/proto/binance.proto',
                 },
             },
         ]),

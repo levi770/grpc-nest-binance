@@ -19,8 +19,8 @@
         "test:cov": "jest --coverage",
         "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
         "test:e2e": "jest --config ./test/jest-e2e.json",
-        "proto:binance": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=../proto --ts_proto_out=src/binance ../proto/binance.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb"
-    },
+        "proto:install": "npm i git+https://github.com/levi770/grpc-nest-binance-proto.git",
+        "proto:binance": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/grpc-nest-binance-proto/proto --ts_proto_out=src/binance/ node_modules/grpc-nest-binance-proto/proto/binance.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb"    },
     "dependencies": {
         "@grpc/grpc-js": "^1.6.9",
         "@nestjs/common": "^9.0.8",

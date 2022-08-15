@@ -1,66 +1,65 @@
 version: '3'
+
 services:
   api-gateway:
     build: ./api-gateway
-    restart: always
     hostname: api-gateway
+    restart: always
     ports:
       - "5000:5000"
       - "5001:5001"
     networks:
-      - backend
-      - frontend
+      - postgres
+    depends_on:
+      - auth-svc
+      - binance-svc
+  
   auth-svc:
     build: ./auth-svc
-    restart: always
     hostname: auth-svc
+    restart: always
     env_file:
       - ./auth-svc/.env
     networks:
-      - backend
-    links:
       - postgres
+    depends_on:
+      - postgres
+  
   binance-svc:
     build: ./binance-svc
-    restart: always
     hostname: binance-svc
+    restart: always
     env_file:
       - ./binance-svc/.env
     networks:
-      - backend
-    links:
       - postgres
+    depends_on:
+      - postgres
+  
   postgres:
-    container_name: postgres
     image: postgres
     volumes:
-      - ./docker-postgresql-multiple-databases:/docker-entrypoint-initdb.d
+      - ./database:/docker-entrypoint-initdb.d
       - /data/postgres:/data/postgres
     ports:
       - "5433:5432"
-    restart: unless-stopped
+    restart: always
     environment:
-      - POSTGRES_MULTIPLE_DATABASES=postgres:micro_auth,postgres:micro_binance,postgres
+      - POSTGRES_MULTIPLE_DATABASES=micro_auth:postgres,micro_binance:postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
     networks:
-      - backend
+      - postgres
+  
   pgadmin:
-    links:
-      - postgres:postgres
-    container_name: pgadmin
     image: dpage/pgadmin4
     ports:
       - "8080:80"
     volumes:
       - /data/pgadmin:/root/.pgadmin
     env_file:
-      - ./auth-svc/.env
-    networks:
-      - backend
+      - ./.pgadmin.env
+
 networks:
-  backend:
+  postgres:
     driver: bridge
-  frontend:
-    external:
-      name: infrastructure

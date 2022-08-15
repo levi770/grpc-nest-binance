@@ -19,8 +19,9 @@
         "test:cov": "jest --coverage",
         "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
         "test:e2e": "jest --config ./test/jest-e2e.json",
-        "proto:auth": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=../proto --ts_proto_out=src/auth/ ../proto/auth.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
-        "proto:binance": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=../proto --ts_proto_out=src/binance/ ../proto/binance.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
+        "proto:install": "npm i git+https://github.com/levi770/grpc-nest-binance-proto.git",
+        "proto:auth": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/grpc-nest-binance-proto/proto --ts_proto_out=src/auth/ node_modules/grpc-nest-binance-proto/proto/auth.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
+        "proto:binance": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/grpc-nest-binance-proto/proto --ts_proto_out=src/binance/ node_modules/grpc-nest-binance-proto/proto/binance.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
         "proto:all": "npm run proto:auth && npm run proto:binance"
     },
     "dependencies": {
@@ -39,6 +40,7 @@
         "@nestjs/websockets": "^9.0.9",
         "class-transformer": "^0.5.1",
         "class-validator": "^0.13.2",
+        "grpc-nest-binance-proto": "github:levi770/grpc-nest-binance-proto",
         "nestjs-pg-pubsub": "^1.0.0",
         "reflect-metadata": "^0.1.13",
         "rimraf": "^3.0.2",

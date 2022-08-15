@@ -29,8 +29,9 @@ export class BinanceService implements OnModuleInit {
     }
 
     async onModuleInit() {
-        const s = await this.spreadRepo.findByPk('base');
-        this.currSpread = +s.spread;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const [s, _] = await this.spreadRepo.findOrCreate({ where: { name: 'base' } });
+        this.currSpread = s.spread ? +s.spread : 0;
     }
 
     //#region BINANCE
