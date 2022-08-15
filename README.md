@@ -15,7 +15,7 @@ Application features:
 - Docker orchestration
 
 To launch application:
-1. clone this repository
+1. clone this repository ```git clone https://github.com/levi770/grpc-nest-binance.git```
 1. run ```cd grpc-nest-binance && cp ./auth-svc/.env-example ./auth-svc/.env && cp ./binance-svc/.env-example ./binance-svc/.env```
 1. run ```docker-compose up```
 
